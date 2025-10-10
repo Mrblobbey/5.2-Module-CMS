@@ -1,0 +1,241 @@
+/* Apple-style CMS layout */
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f9f9f9;
+  color: #1a1a1a;
+  padding: 2rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+form {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  margin-bottom: 3rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+input[type="file"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background-color: #fafafa;
+  transition: border-color 0.2s ease;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+  border-color: #999;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.25);
+  margin-right: 0.5rem;
+}
+
+button,
+.btn {
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button,
+.btn.black {
+  background-color: #000;
+  color: #fff;
+}
+
+.btn.black:hover {
+  background-color: #222;
+}
+
+.btn.green {
+  background-color: #34c759;
+  color: #fff;
+}
+
+.btn.green:hover {
+  background-color: #28a745;
+}
+
+.btn.red {
+  background-color: #ff3b30;
+  color: #fff;
+}
+
+.btn.red:hover {
+  background-color: #d32f2f;
+}
+
+.btn.primary {
+  background-color: #007aff;
+  color: white;
+}
+
+.btn.primary:hover {
+  background-color: #0051cc;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #666;
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.back-link:hover {
+  border-color: #666;
+}
+
+.image-preview {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.image-preview img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.thumb.placeholder {
+  background: #ddd;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.badge {
+  background: #d7f0e1;
+  color: #1a7f37;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  margin-left: 0.5rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.product-table-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+  margin-top: 2rem;
+}
+
+.product-table th,
+.product-table td {
+  text-align: left;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.product-table th {
+  background: #fafafa;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #666;
+}
+
+.product-table td:first-child,
+.product-table th:first-child {
+  padding-left: 2rem;
+}
+
+.product-table td:nth-child(2) {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.product-table img.thumb {
+  display: block;
+  margin: 0 auto;
+}
+
+/* extra stijl voor de tweede sectie (blogbeheer) */
+.cms-header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.cms-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.cms-header .btn {
+  margin-top: 0;
+}
