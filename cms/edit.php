@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         product_price = ?, 
         product_description = ?, 
         product_categorie = ?, 
-        product_console = ?, 
+        product_model = ?, 
         product_review = ?, 
         product_quantity = ?, 
         product_sale = ?, 
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_POST['product_price'],
         $_POST['product_description'],
         $_POST['product_categorie'],
-        $_POST['product_console'],
+        $_POST['product_model'],
         $_POST['product_review'],
         $_POST['product_quantity'],
         isset($_POST['product_sale']) ? 1 : 0,
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product bewerken</title>
+  <title>autos/producten bewerken</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -74,8 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <label for="product_categorie">Categorie</label>
     <input name="product_categorie" value="<?= htmlspecialchars($product['product_categorie']) ?>">
 
-    <label for="product_console">Console</label>
-    <input name="product_console" value="<?= htmlspecialchars($product['product_console']) ?>">
+    <label for="product_model">model</label>
+    <input name="product_model" value="<?= htmlspecialchars($product['product_model']) ?>">
 
     <label for="product_review">Reviewscore (1-5)</label>
     <input name="product_review" type="number" step="0.1" min="0" max="5" value="<?= $product['product_review'] ?>">

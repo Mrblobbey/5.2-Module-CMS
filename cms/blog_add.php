@@ -34,11 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Nieuwe blog toevoegen</title>
+  <title>Nieuwe autonieuws toevoegen</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>Nieuwe blog toevoegen</h1>
+  <h1>Nieuwe autonieuws toevoegen</h1>
 
   <form method="post" enctype="multipart/form-data">
     <label>Titel</label>

@@ -1,0 +1,77 @@
+/* ========== Algemene instellingen ========== */
+:root {
+  /* Kleuren, fonts, spacing variabelen */
+}
+
+/* ========== Reset ========== */
+*,
+*::before,
+*::after {}
+
+html, body {}
+
+img, video {}
+
+button, input, select {}
+
+
+/* ========== Header & Navigatie ========== */
+header {}
+
+nav {}
+
+nav img {}
+
+nav ul {}
+
+nav li {}
+
+nav a {}
+
+
+/* ========== Hero sectie ========== */
+.hero {}
+
+.heroVideoWrapper {}
+
+#heroVideo {}
+
+.heroOverlay {}
+
+.heroContent {}
+
+.heroContent h1 {}
+
+.heroContent p {}
+
+.heroContent button {}
+
+
+/* ========== Filtercontainer ========== */
+.filterContainer {}
+
+.filterContainer h2 {}
+
+.filterCategorie {}
+
+.filterCategorie label {}
+
+.filterCategorie select {}
+
+.filterCategorie button {}
+
+
+/* ========== Actueel auto nieuws ========== */
+#carNewsContainer {}
+
+
+/* ========== Footer ========== */
+footer {}
+
+footer p {}
+
+footer label {}
+
+footer input[type="text"] {}
+
+footer button {}

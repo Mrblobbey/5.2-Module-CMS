@@ -3,11 +3,13 @@ include '../includes/db.php';
 ?>
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
   <meta charset="UTF-8">
-  <title>CMS Dashboard</title>
+  <title>CMS Dashboard Autos</title>
   <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 
   <!--  PRODUCTBEHEER -->
@@ -24,7 +26,7 @@ include '../includes/db.php';
           <th>Naam</th>
           <th>Prijs</th>
           <th>Categorie</th>
-          <th>Console</th>
+          <th>Model</th>
           <th>Voorraad</th>
           <th>Acties</th>
         </tr>
@@ -50,7 +52,8 @@ include '../includes/db.php';
             <td><?= $product['product_quantity'] ?></td>
             <td>
               <a href="edit.php?id=<?= $product['productID'] ?>" class="btn small">Bewerken</a>
-              <a href="delete.php?id=<?= $product['productID'] ?>" class="btn small red" onclick="return confirm('Weet je zeker dat je dit product wilt verwijderen?')">Verwijderen</a>
+              <a href="delete.php?id=<?= $product['productID'] ?>" class="btn small red"
+                onclick="return confirm('Weet je zeker dat je dit product wilt verwijderen?')">Verwijderen</a>
             </td>
           </tr>
         <?php endforeach; ?>
@@ -59,42 +62,43 @@ include '../includes/db.php';
   </main>
 
   <!-- BLOGBEHEER -->
-<header class="cms-header" style="margin-top: 60px;">
-  <h1>Blogbeheer</h1>
-  <a href="blog_add.php" class="btn primary">+ Nieuwe blog</a>
-</header>
+  <header class="cms-header" style="margin-top: 60px;">
+    <h1>Blogbeheer</h1>
+    <a href="blog_add.php" class="btn primary">+ Nieuwe blog</a>
+  </header>
 
-<main class="product-table-wrapper">
-  <table class="product-table">
-    <thead>
-      <tr>
-        <th>Afbeelding</th>
-        <th>Titel</th>
-        <th>Inhoud</th>
-        <th>Acties</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      $stmt = $pdo->query("SELECT * FROM blogposts ORDER BY id DESC");
-
-      foreach ($stmt as $blog): ?>
+  <main class="product-table-wrapper">
+    <table class="product-table">
+      <thead>
         <tr>
-          <td>
-            <?php if (!empty($blog['image'])): ?>
-              <img src="<?= str_replace('./', '/rodygamestore/', $blog['image']) ?>" class="thumb">
-            <?php else: ?>
-              <span class="thumb placeholder">Geen</span>
-            <?php endif; ?>
-          </td>
-          <td><?= htmlspecialchars($blog['title']) ?></td>
-          <td><?= htmlspecialchars(mb_strimwidth($blog['content'], 0, 100, '...')) ?></td>
-          <td>
-            <a href="blog_edit.php?id=<?= $blog['id'] ?>" class="btn small">Bewerken</a>
-            <a href="blog_delete.php?id=<?= $blog['id'] ?>" class="btn small red" onclick="return confirm('Weet je zeker dat je deze blog wilt verwijderen?')">Verwijderen</a>
-          </td>
+          <th>Afbeelding</th>
+          <th>Titel</th>
+          <th>Inhoud</th>
+          <th>Acties</th>
         </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-</main>
+      </thead>
+      <tbody>
+        <?php
+        $stmt = $pdo->query("SELECT * FROM blogposts ORDER BY id DESC");
+
+        foreach ($stmt as $blog): ?>
+          <tr>
+            <td>
+              <?php if (!empty($blog['image'])): ?>
+                <img src="<?= str_replace('./', '/rodygamestore/', $blog['image']) ?>" class="thumb">
+              <?php else: ?>
+                <span class="thumb placeholder">Geen</span>
+              <?php endif; ?>
+            </td>
+            <td><?= htmlspecialchars($blog['title']) ?></td>
+            <td><?= htmlspecialchars(mb_strimwidth($blog['content'], 0, 100, '...')) ?></td>
+            <td>
+              <a href="blog_edit.php?id=<?= $blog['id'] ?>" class="btn small">Bewerken</a>
+              <a href="blog_delete.php?id=<?= $blog['id'] ?>" class="btn small red"
+                onclick="return confirm('Weet je zeker dat je deze blog wilt verwijderen?')">Verwijderen</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </main>

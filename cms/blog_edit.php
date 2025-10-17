@@ -35,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Blog bewerken</title>
+  <title>autonieuws bewerken</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>Blog bewerken</h1>
+  <h1>autonieuws bewerken</h1>
   <form method="post" enctype="multipart/form-data">
     <label>Titel</label>
     <input type="text" name="title" value="<?= htmlspecialchars($blog['title']) ?>" required>
