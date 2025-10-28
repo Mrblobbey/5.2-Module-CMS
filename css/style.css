@@ -1,77 +1,568 @@
-/* ========== Algemene instellingen ========== */
+/* 
+   Kleuren & basis
+    */
 :root {
-  /* Kleuren, fonts, spacing variabelen */
+  --brand: #8E1414;
+  --brand-700: #761010;
+  --accent: #FFC529;
+  --ink: #1d1d1f;
+  --muted: #6b6b6b;
+  --bg: #ffffff;
+  --bg-soft: #F3EEF1;
+  --card: #ffffff;
+  --stroke: #e8e8e8;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .12);
+  --radius-lg: 16px;
+  --radius-xl: 20px;
 }
 
-/* ========== Reset ========== */
 *,
 *::before,
-*::after {}
+*::after {
+  box-sizing: border-box;
+}
 
-html, body {}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
-img, video {}
+body {
+  font-family: 'Lato', system-ui, -apple-system, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
+}
 
-button, input, select {}
+/* Links & buttons */
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
+button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
 
-/* ========== Header & Navigatie ========== */
-header {}
+/* 
+   Header / Navigatie
+    */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--brand);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+}
+/* Flex zorgt voor een rij die 1 demenisonaal is perfect voor nav */
+header nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
 
-nav {}
+header nav img[alt="ven_logo"] {
+  width: 110px;
+  height: auto;
+  display: block;
+}
 
-nav img {}
+header nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex: 1;
+}
 
-nav ul {}
+header nav a {
+  color: #fff;
+  font-weight: 700;
+  opacity: .95;
+}
 
-nav li {}
+header nav a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
 
-nav a {}
+/* Rechts een geel CTA knopje “Auto zoeken” (laatste li) */
+header nav ul li:last-child a {
+  background: var(--accent);
+  color: #2b2b2b;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
 
+header nav ul li:last-child a::after {
+  content: "→";
+  font-weight: 900;
+}
 
-/* ========== Hero sectie ========== */
-.hero {}
+header nav ul li:last-child a:hover {
+  filter: brightness(0.95);
+}
 
-.heroVideoWrapper {}
+/* 
+   HERO (video + overlay + tekst)
+    */
+.hero {
+  position: relative;
+  min-height: 620px;
+  padding: 80px 24px;
+  /* ruimte voor de twee kaarten */
+  overflow: hidden;
+}
 
-#heroVideo {}
+/* video laag */
+.heroVideoWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
 
-.heroOverlay {}
+#heroVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  /* Zorgt er voor dat de video buiten de oorsponkelijke scherm valt zodat de zwarte balken weg zijn */
+  height: 110vh;
+  border: 0;
+  background: #000;
+}
 
-.heroContent {}
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .35), rgba(0, 0, 0, .55));
+}
 
-.heroContent h1 {}
+/* ↙️ Deze container zet welkom + filter naast elkaar */
+.heroInner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  /* afstand tussen de twee kaarten */
+  width: 100%;
+}
 
-.heroContent p {}
+/* Welkomstkaart (links) */
+.heroContent {
+  background: rgba(255, 255, 255, 0.94);
+  color: #111;
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+  width: min(520px, 100%);
+}
 
-.heroContent button {}
+.heroContent h1 {
+  margin: 0;
+  font-size: clamp(36px, 5vw, 48px);
+  font-weight: 900;
+  letter-spacing: .5px;
+  color: #111;
+}
 
+.heroContent p {
+  margin: 6px 0 12px;
+  font-size: clamp(14px, 2.2vw, 18px);
+  color: #333;
+}
 
-/* ========== Filtercontainer ========== */
-.filterContainer {}
+.heroButtons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 
-.filterContainer h2 {}
+.heroButtons button {
+  background: var(--accent);
+  color: #1f1f1f;
+  font-weight: 900;
+  padding: 12px 20px;
+  border-radius: 999px;
+}
 
-.filterCategorie {}
+.heroButtons button+button {
+  background: transparent;
+  color: #111;
+  border: 2px solid #111;
+}
 
-.filterCategorie label {}
+.heroButtons button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
 
-.filterCategorie select {}
+/* Filterkaart (rechts) — GEEN negatieve margins meer */
+.filterContainer {
+  width: min(460px, 100%);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  /* kaart-stijl zit op .filterCategorie */
+}
 
-.filterCategorie button {}
+.filterContainer>h2 {
+  display: none;
+}
+/* Grid zorgt voor een rijen kollemen hebben en dus 2d zijn  */
+.filterContainer .filterCategorie {
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: 26px;
+  display: grid;
+  gap: 16px;
+}
 
+/* Titel op kaart */
+.filterContainer .filterCategorie::before {
+  content: "Ons aanbod filter";
+  display: block;
+  font-weight: 900;
+  font-size: 22px;
+  color: #2d2d2d;
+  text-align: center;
+  margin-bottom: 18px;
+}
 
-/* ========== Actueel auto nieuws ========== */
-#carNewsContainer {}
+.filterContainer label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: 4px;
+}
 
+/* Inputs */
+.filterContainer select,
+.filterContainer input[type="text"],
+.filterContainer input[type="number"] {
+  width: 100%;
+  background: #F7F8FA;
+  border: 1px solid #E3E5EA;
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #2c2c2c;
+  outline: none;
+}
 
-/* ========== Footer ========== */
-footer {}
+.filterContainer select:focus {
+  border-color: #c8ccd6;
+  box-shadow: 0 0 0 3px rgba(142, 20, 20, .12);
+}
 
-footer p {}
+/* Label + select spacing */
+.filterContainer label+select {
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
 
-footer label {}
+/* Zoekknop */
+.filterContainer .filterBtn {
+  margin-top: 8px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 800;
+  padding: 14px 20px;
+  border-radius: 12px;
+  width: 100%;
+}
 
-footer input[type="text"] {}
+.filterContainer .filterBtn:hover {
+  background: var(--brand-700);
+}
 
-footer button {}
+/* 
+   Section: Actueel autonieuws
+    */
+#carNewsContainer {
+  background: var(--bg-soft);
+  padding: 64px 20px;
+}
+
+#carNewsContainer::before {
+  content: "Actueel autonieuws";
+  display: block;
+  text-align: center;
+  font-weight: 900;
+  font-size: clamp(24px, 3.2vw, 36px);
+  color: #2d2d2d;
+  margin: 0 auto 26px;
+}
+
+#carNewsContainer .newsGrid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+#carNewsContainer .newsCard {
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+#carNewsContainer .newsCard h3 {
+  margin: 10px 0 8px;
+  font-size: 18px;
+}
+
+#carNewsContainer .newsCard p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+#carNewsContainer .newsCard img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin-top: 8px;
+}
+
+/* 
+   Section: Aanbod auto’s
+    */
+#carProducts {
+  max-width: 1200px;
+  margin: 48px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+#carProducts::before {
+  content: "Ons nieuwste aanbod mooie auto's";
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-bottom: 8px;
+  font-weight: 900;
+  font-size: clamp(24px, 3.2vw, 34px);
+  color: #1f2430;
+}
+
+/* Productkaart */
+#carProducts .carCard {
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#carProducts .carCard .media {
+  aspect-ratio: 16/9;
+  background: #f4f4f4;
+}
+
+#carProducts .carCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#carProducts .carCard .content {
+  padding: 14px 16px 6px;
+}
+
+#carProducts .carCard h3 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+#carProducts .carCard .meta {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+#carProducts .carCard .priceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 900;
+  margin: 4px 0 10px;
+}
+
+#carProducts .carCard .priceRow .buy {
+  font-size: 20px;
+}
+
+#carProducts .carCard .priceRow .per {
+  font-size: 14px;
+  color: #333;
+  text-align: right;
+}
+
+#carProducts .carCard .actions {
+  padding: 0 16px 16px;
+}
+
+#carProducts .carCard .actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 900;
+}
+
+#carProducts .carCard .actions .btn::after {
+  /* voegt pijl toe zonder html */
+  content: "→";
+  font-weight: 900;
+}
+
+#carProducts .carCard .actions .btn:hover {
+  background: var(--brand-700);
+}
+
+/* Pagination is om de pagina's nav te stylen wordt niet gebruikt */
+.pagination {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.pagination a {
+  border: 1px solid var(--stroke);
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.pagination a.active {
+  background: #FFE7A2;
+  border-color: #F3D26B;
+}
+
+/* 
+   Footer
+    */
+footer {
+  margin-top: 40px;
+  padding: 36px 20px;
+  background: var(--bg-soft);
+  border-top: 1px solid var(--stroke);
+}
+
+footer>p {
+  font-weight: 900;
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+footer label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+footer input[type="text"] {
+  width: min(420px, 92vw);
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-right: 8px;
+}
+
+footer input[type="text"]:focus {
+  border-color: #c8ccd6;
+  box-shadow: 0 0 0 3px rgba(142, 20, 20, .1);
+}
+
+footer button {
+  background: var(--brand);
+  color: #fff;
+  font-weight: 900;
+  padding: 12px 18px;
+  border-radius: 12px;
+}
+
+footer button:hover {
+  background: var(--brand-700);
+}
+
+/* 
+   hier maak ik de website css voor de grote van een ipad op 1100px 
+    */
+@media (max-width: 1100px) {
+  #carProducts {
+    /* verandert van 3 kolommen naar 2  */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Dit is voor de mobiel */
+@media (max-width: 900px) {
+
+  /* op mobiel stapelen we de twee kaarten onder elkaar */
+  .heroInner {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero {
+    padding: 48px 16px;
+  }
+
+  .heroContent,
+  .filterContainer {
+    width: 100%;
+  }
+}
+/* Dit is voor super kleine mobielen */
+@media (max-width: 640px) {
+  header nav {
+    gap: 14px;
+  }
+
+  header nav ul {
+    gap: 16px;
+  }
+
+  #carProducts {
+    grid-template-columns: 1fr;
+  }
+}

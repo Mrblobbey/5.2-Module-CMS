@@ -1,5 +1,10 @@
-/* Apple-style CMS layout */
-body {
+/* apple-style CMS layout (volledige versie) */
+   /*  verbergt horizontale scroll */
+html, body {
+  overflow-x: hidden; 
+}
+
+   body {
   font-family: 'Inter', sans-serif;
   background: #f9f9f9;
   color: #1a1a1a;
@@ -8,6 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 h1 {
@@ -56,9 +62,7 @@ textarea:focus {
   outline: none;
 }
 
-textarea {
-  resize: vertical;
-}
+textarea { resize: vertical; }
 
 input[type="checkbox"] {
   transform: scale(1.25);
@@ -80,41 +84,17 @@ button,
 }
 
 button,
-.btn.black {
-  background-color: #000;
-  color: #fff;
-}
+.btn.black { background-color: #000; color: #fff; }
+.btn.black:hover { background-color: #222; }
 
-.btn.black:hover {
-  background-color: #222;
-}
+.btn.green { background-color: #34c759; color: #fff; }
+.btn.green:hover { background-color: #28a745; }
 
-.btn.green {
-  background-color: #34c759;
-  color: #fff;
-}
+.btn.red { background-color: #ff3b30; color: #fff; }
+.btn.red:hover { background-color: #d32f2f; }
 
-.btn.green:hover {
-  background-color: #28a745;
-}
-
-.btn.red {
-  background-color: #ff3b30;
-  color: #fff;
-}
-
-.btn.red:hover {
-  background-color: #d32f2f;
-}
-
-.btn.primary {
-  background-color: #007aff;
-  color: white;
-}
-
-.btn.primary:hover {
-  background-color: #0051cc;
-}
+.btn.primary { background-color: #007aff; color: white; }
+.btn.primary:hover { background-color: #0051cc; }
 
 .back-link {
   display: inline-block;
@@ -125,60 +105,40 @@ button,
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease;
 }
+.back-link:hover { border-color: #666; }
 
-.back-link:hover {
-  border-color: #666;
-}
-
-.image-preview {
-  margin-top: 1rem;
-  text-align: center;
-}
-
+.image-preview { margin-top: 1rem; text-align: center; }
 .image-preview img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
+  width: 200px; height: 200px; object-fit: cover;
   border-radius: 1rem;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
 .thumb {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
+  width: 80px; height: 80px; object-fit: cover;
   border-radius: 0.5rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .thumb.placeholder {
-  background: #ddd;
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-  text-align: center;
-  line-height: 80px;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  color: #666;
+  background: #ddd; display: inline-block;
+  width: 80px; height: 80px; text-align: center; line-height: 80px;
+  border-radius: 0.5rem; font-size: 0.75rem; color: #666;
 }
 
 .badge {
-  background: #d7f0e1;
-  color: #1a7f37;
-  font-size: 0.75rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 1rem;
-  margin-left: 0.5rem;
-  font-weight: 600;
+  background: #d7f0e1; color: #1a7f37;
+  font-size: 0.75rem; padding: 0.2rem 0.5rem;
+  border-radius: 1rem; margin-left: 0.5rem; font-weight: 600;
   vertical-align: middle;
 }
 
+/* Tabel wrappers */
 .product-table-wrapper {
   max-width: 1200px;
   margin: 0 auto;
 }
-
+.product-table-news,
 .product-table {
   width: 100%;
   border-collapse: collapse;
@@ -188,7 +148,8 @@ button,
   box-shadow: 0 6px 24px rgba(0,0,0,0.06);
   margin-top: 2rem;
 }
-
+.product-table-news th,
+.product-table-news td,
 .product-table th,
 .product-table td {
   text-align: left;
@@ -196,7 +157,7 @@ button,
   border-bottom: 1px solid #eee;
   vertical-align: middle;
 }
-
+.product-table-news th,
 .product-table th {
   background: #fafafa;
   font-weight: 600;
@@ -205,23 +166,20 @@ button,
   letter-spacing: 0.03em;
   color: #666;
 }
-
+.product-table-news td:first-child,
+.product-table-news th:first-child,
 .product-table td:first-child,
-.product-table th:first-child {
-  padding-left: 2rem;
-}
+.product-table th:first-child { padding-left: 2rem; }
 
 .product-table td:nth-child(2) {
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 600; font-size: 1rem;
+}
+.product-table-news img.thumb,
+.product-table img.thumb { 
+  display: block; margin: 0 auto; 
 }
 
-.product-table img.thumb {
-  display: block;
-  margin: 0 auto;
-}
-
-/* extra stijl voor de tweede sectie (blogbeheer) */
+/* Header boven secties */
 .cms-header {
   width: 100%;
   max-width: 1200px;
@@ -230,12 +188,113 @@ button,
   align-items: center;
   margin-top: 4rem;
 }
+.cms-header h1 { font-size: 2rem; margin: 0; }
+.cms-header .btn { margin-top: 0; }
 
-.cms-header h1 {
-  font-size: 2rem;
-  margin: 0;
+
+body {
+  padding: 1rem !important;
+  font-size: 15px !important;
 }
 
-.cms-header .btn {
-  margin-top: 0;
+.cms-header {
+  max-width: 1000px !important;
+  margin-top: 1.5rem !important;
 }
+.cms-header h1 { font-size: 1.6rem !important; }
+
+/* Maak alleen de tabelsecties scrollbaar binnen het viewport */
+.product-table-wrapper {
+  max-width: 1700px !important;
+  margin: 0 auto !important;
+  height: 90vh !important;             
+  overflow-y: auto !important;          
+  border-radius: 12px;
+}
+
+
+/* Tabel compacter + vaste layout */
+.product-table-news,
+.product-table {
+  table-layout: fixed !important;
+  font-size: 0.9rem !important;
+  margin-top: 1rem !important;
+}
+
+.product-table-news,
+.product-table th,
+.product-table td {
+  padding: 0.6rem 0.8rem !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid #eee;
+}
+
+.product-table-news th,
+.product-table th {
+  font-size: 0.8rem !important;
+  letter-spacing: .02em !important;
+}
+
+/* Auto producten kolombreedtes per klom vershillend voor juiste scherm grote */
+.product-table th:nth-child(1),
+.product-table td:nth-child(1) { width: 84px; }     /* Afbeelding */
+.product-table th:nth-child(2),
+.product-table td:nth-child(2) { width: 40px; }    /* Merk */
+.product-table th:nth-child(3),
+.product-table td:nth-child(3) { width: 160px; }    /* Model */
+.product-table th:nth-child(4),
+.product-table td:nth-child(4) { width: 80px; }    /* Carrosserie */
+.product-table th:nth-child(5),
+.product-table td:nth-child(5) { width: 90px; }     /* Bouwjaar */
+.product-table th:nth-child(6),
+.product-table td:nth-child(6) { width: 60px; }    /* Km stand */
+.product-table th:nth-child(7),
+.product-table td:nth-child(7) { width: 110px; }    /* Brandstof */
+.product-table th:nth-child(8),
+.product-table td:nth-child(8) { width: 130px; }    /* Versnellingsbak */
+.product-table th:nth-child(9),
+.product-table td:nth-child(9) { width: 60px; }    /* Vermogen */
+.product-table th:nth-child(10),
+.product-table td:nth-child(10) { width: 80px; }   /* Kenteken */
+.product-table th:nth-child(11),
+.product-table td:nth-child(11) { width: 130px; }   /* Fabrieks_kleur */
+.product-table th:nth-child(12),
+.product-table td:nth-child(12) { width: 120px; }   /* Prijs */
+.product-table th:nth-child(13),
+.product-table td:nth-child(13) { width: 70px; }   /* Prijs financieren */
+.product-table td:nth-child(14),
+.product-table td:nth-child(14) { width: 70px; }   /* Acties */
+
+/* Nieuws objecten kolombreedtes per klom vershillend voor juiste scherm grote */
+
+
+/* Lange waardes afkappen */
+.product-table td {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Thumbs afbeelding goed klein te stylen  */
+.thumb,
+.thumb.placeholder {
+  width: 56px !important;
+  height: 56px !important;
+  line-height: 56px !important;
+}
+
+/* Badges compacter */
+.badge {
+  font-size: 0.7rem !important;
+  padding: 0.15rem 0.45rem !important;
+}
+
+/* Kleine actieknoppen */
+.btn.small {
+  padding: 0.4rem 0.7rem !important;
+  font-size: 0.85rem !important;
+  border-radius: 1rem !important;
+}
+
+/* Afstand tussen 1e en 2e sectie compact */
+.product-table + .cms-header { margin-top: 2rem !important; }

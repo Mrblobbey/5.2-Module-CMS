@@ -1,0 +1,294 @@
+/* Kleuren & basis pre sets om ze doormiddel var opnieuw te gebruiken */
+:root{
+  --brand: #8E1414;
+  --brand-700:#761010;
+  --accent: #FFC529;
+  --ink: #1d1d1f;
+  --muted: #6b6b6b;
+  --bg: #ffffff;
+  --bg-soft:#F3EEF1;
+  --panel:#83767B;          
+  --card:#ffffff;
+  --stroke:#e8e8e8;
+  --shadow: 0 10px 30px rgba(0,0,0,.12);
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+*,
+*::before,*::after{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family: 'Lato', system-ui, -apple-system, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height:1.5;
+}
+
+/* Links & buttons */
+a{ color:inherit; text-decoration:none; }
+button{
+  appearance:none; border:0; background:transparent;
+  cursor:pointer; font: inherit;
+}
+
+/* 
+   Header / Navigatie
+    */
+header{
+  position:sticky; top:0; z-index:50; background:var(--brand);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+header nav{
+  max-width:1200px; margin:0 auto; padding:14px 20px;
+  display:flex; align-items:center; gap:24px;
+}
+header nav img[alt="ven_logo"]{
+  width:110px; height:auto; display:block;
+}
+header nav ul{
+  list-style:none; margin:0; padding:0;
+  display:flex; align-items:center; gap:26px;
+  flex:1;
+}
+header nav a{
+  color:#fff; font-weight:700; opacity:.95;
+}
+header nav a:hover{ opacity:1; text-decoration:underline; }
+
+/* Rechts een geel CTA knopje “Auto zoeken” (laatste li) */
+header nav ul li:last-child a{
+  background: var(--accent); color:#2b2b2b;
+  padding:10px 18px; border-radius:999px; font-weight:900;
+  display:inline-flex; align-items:center; gap:8px;
+}
+header nav ul li:last-child a::after{
+  content:"→"; font-weight:900;
+}
+header nav ul li:last-child a:hover{
+  filter: brightness(0.95);
+}
+
+/* 
+   MAIN – detail header
+    */
+.detail-grid{
+  max-width:1200px;
+  margin:40px auto 20px;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns: 2fr 1fr;
+  gap:28px;
+  align-items:start;
+}
+
+/* Linkerzijde: grote foto */
+.poster-frame{
+  background:#f5f5f7;
+  border-radius: var(--radius-xl);
+  overflow:hidden;
+  box-shadow: var(--shadow);
+}
+.poster-main{
+  width:100%;
+  display:block;
+  aspect-ratio: 16 / 9;       /* lijkt op screenshot verhoudingen */
+  object-fit: cover;
+}
+
+/* Rechterzijde: grijs/paars paneel met witte tekst */
+#car_sales_info.sales{
+  background: var(--panel);
+  color:#fff;
+  border-radius: var(--radius-xl);
+  padding:26px 28px;
+  box-shadow: var(--shadow);
+  top:96px;
+}
+.sales .title{
+  font-size:28px;
+  line-height:1.15;
+  margin:0 0 6px;
+  font-weight:900;
+  color:#fff;
+  letter-spacing:.2px;
+  text-shadow:0 1px 0 rgba(0,0,0,.08);
+}
+.sales .subtitle{
+  margin:0 0 10px;
+  font-weight:700;
+  opacity:.95;
+}
+.sales .subtitle .kwh{
+  font-weight:900;
+}
+.sales .meta{
+  margin:0 0 18px;
+  opacity:.9;
+}
+
+/* Prijsblok binnen de card */
+.price_card{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:6px;
+}
+.price_card .price{
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:.3px;
+}
+.price_card .finance_label{
+  font-weight:700;
+  opacity:.9;
+}
+.price_card .finance{
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+.price_card .cta{
+  margin-top:8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 18px;
+  background: #6E0F0F;      /* donkerder dan --brand, lijkt op screenshot-knop */
+  color:#fff;
+  font-weight:900;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.18);
+}
+.price_card .cta:hover{
+  filter:brightness(.98);
+  transform: translateY(-1px);
+}
+
+/* Specificaties + tabs-look */
+.specs{
+  max-width:1200px;
+  margin:20px auto 0;
+  padding:0 20px 20px;
+}
+.specs h2{
+  font-size:22px;
+  margin:14px 0 16px;
+}
+
+/* tabknoppen-stijl design */
+.tabbar{ display:flex; gap:10px; margin:8px 0 16px; }
+.tab{
+  padding:8px 14px;
+  border-radius:999px;
+  background:#ffffff;
+  border:1px solid #DFE3E8;
+  color:#344054;
+  font-weight:700;
+  font-size:13px;
+}
+.tab.is-active{
+  background:#8C1A1A10;
+  border-color:#E4C2C2;
+  color:#8E1414;
+}
+
+/* Tabellen als nette key/value */
+.spec-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 10px;    
+}
+.spec-table th,
+.spec-table td{
+  padding:10px 14px;
+  background:#fff;
+}
+.spec-table th{
+  width:22%;
+  text-align:left;
+  color:#5f6b7a;
+  font-weight:700;
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+  border:1px solid var(--stroke);
+  border-right:0;
+}
+.spec-table td{
+  color:#111827;
+  font-weight:700;
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
+  border:1px solid var(--stroke);
+  border-left:0;
+}
+
+/* Interesse-form */
+.interest{
+  max-width:1200px;
+  margin:26px auto 0;
+  padding:0 20px 20px;
+}
+.interest h3{ margin:0 0 6px; }
+.interest-form{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:12px;
+  max-width:900px;
+}
+.interest-form label{
+  display:flex; flex-direction:column; gap:6px; font-weight:700; color:#475467;
+}
+.interest-form input{
+  border:1px solid var(--stroke);
+  border-radius:12px;
+  padding:12px 14px;
+  font:inherit;
+}
+.interest-form button{
+  grid-column: 1 / -1;
+  justify-self:start;
+  margin-top:2px;
+  background: var(--brand);
+  color:#fff;
+  font-weight:900;
+  padding:12px 18px;
+  border-radius:12px;
+}
+.interest-form button:hover{ background: var(--brand-700); }
+
+/* Footer */
+footer{
+  margin-top:40px; padding:36px 20px; background:var(--bg-soft); border-top:1px solid var(--stroke);
+}
+footer > p{
+  font-weight:900; font-size:18px; margin:0 0 12px;
+}
+footer label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+footer input[type="email"]{
+  width:min(420px, 92vw); background:#fff; border:1px solid var(--stroke);
+  border-radius:12px; padding:12px 14px; margin-right:8px;
+}
+footer input[type="email"]:focus{ border-color:#c8ccd6; box-shadow:0 0 0 3px rgba(142,20,20,.1); }
+footer button{
+  background: var(--brand); color:#fff; font-weight:900; padding:12px 18px; border-radius:12px;
+}
+footer button:hover{ background: var(--brand-700); }
+
+/* Responsive  */
+@media (max-width: 1024px){
+  .detail-grid{
+    /* Komt uit gridd zorgt voor goede preset groote  */
+    grid-template-columns: 1fr;
+  }
+  #car_sales_info.sales{
+    position:static;
+  }
+  .interest-form{
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px){
+  header nav{ gap:14px; }
+  header nav ul{ gap:16px; }
+}
