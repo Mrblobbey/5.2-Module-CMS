@@ -82,9 +82,15 @@ $titel = trim(($auto['merk'] ?? '') . ' ' . ($auto['model'] ?? ''));
             <td>€<?= number_format($product['prijs_financieren'], 2) ?></td>
 
             <td>
-              <a href="product_edit.php?id=<?= $product['auto_id'] ?>" class="btn small">Bewerken</a>
-              <a href="delete.php?id=<?= $product['auto_id'] ?>" class="btn small red"
-                onclick="return confirm('Weet je zeker dat je dit product wilt verwijderen?')">Verwijderen</a>
+              <a href="product_edit.php?id=<?= (int) $product['auto_id'] ?>" class="btn small">Bewerken</a>
+
+              <form action="actions.php" method="post" style="display:inline"
+                onsubmit="return confirm('Weet je zeker dat je dit product wilt verwijderen?')">
+                <input type="hidden" name="type" value="car">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" value="<?= (int) $product['auto_id'] ?>">
+                <button type="submit" class="btn small red">Verwijderen</button>
+              </form>
             </td>
           </tr>
         <?php endwhile; ?>

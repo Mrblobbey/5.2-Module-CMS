@@ -45,6 +45,17 @@
             <label>KM-stand
                 <input type="number" name="km_stand" min="0" required>
             </label>
+            <label>Vermogen (pk)
+                <input type="number" name="vermogen" min="0" step="1">
+            </label>
+
+            <label>Kenteken
+                <input type="text" name="kenteken" maxlength="20" placeholder="XX-999-X">
+            </label>
+
+            <label>Fabriekskleur
+                <input type="text" name="fabrieks_kleur" maxlength="50" placeholder="Midnight Silver">
+            </label>
         </div>
 
         <div class="grid3">

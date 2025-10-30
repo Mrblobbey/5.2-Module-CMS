@@ -65,6 +65,19 @@ $auto = $stmt->fetch(PDO::FETCH_ASSOC);
                 <input type="number" name="km_stand" min="0" value="<?= htmlspecialchars($auto['km_stand'] ?? '') ?>"
                     required>
             </label>
+
+            <label>Vermogen (pk)
+                <input type="number" name="vermogen" value="<?= (int) $product['vermogen'] ?>" min="0" step="1">
+            </label>
+
+            <label>Kenteken
+                <input type="text" name="kenteken" value="<?= htmlspecialchars($product['kenteken']) ?>" maxlength="20">
+            </label>
+
+            <label>Fabriekskleur
+                <input type="text" name="fabrieks_kleur" value="<?= htmlspecialchars($product['fabrieks_kleur']) ?>"
+                    maxlength="50">
+            </label>
         </div>
 
         <div class="grid3">

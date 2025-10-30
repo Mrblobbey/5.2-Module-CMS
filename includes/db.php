@@ -1,8 +1,14 @@
 <?php
+// $host = 'localhost';            // of je servernaam
+// $db   = 'van_der_ven_autos';    // naam van de DataBase 
+// $user = 'root';                 // gebruikersnaam
+// $pass = '';                     // Wachtwoord van de db
+
 $host = 'localhost';            // of je servernaam
-$db   = 'van_der_ven_autos';    // naam van de DataBase 
-$user = 'root';                 // gebruikersnaam
-$pass = '';                     // Wachtwoord van de db
+$db   = 'u531289_van_der_ven_autos';    // naam van de DataBase 
+$user = 'u531289_van_der_ven_autos';                 // gebruikersnaam
+$pass = 'tqCgt4tyMjc8SPYTqKCe';                     // Wachtwoord van de db
+
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
