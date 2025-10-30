@@ -7,19 +7,53 @@ $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $newsSql = "SELECT nieuws_id, title, content, poster_news, posted_at
-            FROM nieuws
-            ORDER BY posted_at DESC";
+              FROM nieuws
+              ORDER BY posted_at DESC";
 $newsStmt = $pdo->prepare($newsSql);
 $newsStmt->execute();
 $news = $newsStmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // neemt het email uit de form zonder validatie 
-  $email = $_POST['email'] ?? '';
+// filters gedeelte in laden merk distinct vooegt dubbele damen <> niet gelijk aan 
+$merkStmt = $pdo->query("SELECT DISTINCT merk FROM autos WHERE merk <> '' ORDER BY merk ASC");
+$merken = $merkStmt->fetchAll(PDO::FETCH_COLUMN);
 
-  // sla op in de database 
-  $newsbrief = $pdo->prepare("INSERT INTO nieuwsbrief (email) VALUES (:email)");
-  $newsbrief->execute([':email' => $email]);
+// filters gedeelte in laden merk distinct vooegt dubbele damen <> niet gelijk aan 
+$modelStmt = $pdo->query("SELECT DISTINCT model FROM autos WHERE model <> '' ORDER BY model ASC");
+$modelen = $modelStmt->fetchAll(PDO::FETCH_COLUMN);
+
+// filters gedeelte in laden merk distinct vooegt dubbele damen <> niet gelijk aan 
+$carrosserieStmt = $pdo->query("SELECT DISTINCT carrosserie FROM autos WHERE carrosserie <> '' ORDER BY carrosserie ASC");
+$carrosseries = $carrosserieStmt->fetchAll(PDO::FETCH_COLUMN);
+
+// filters gedeelte in laden merk distinct vooegt dubbele damen <> niet gelijk aan 
+$brandstofStmt = $pdo->query("SELECT DISTINCT brandstof FROM autos WHERE brandstof <> '' ORDER BY brandstof ASC");
+$brandstofen = $brandstofStmt->fetchAll(PDO::FETCH_COLUMN);
+
+// filters gedeelte in laden merk distinct vooegt dubbele damen <> niet gelijk aan 
+$bouwjaarStmt = $pdo->query("SELECT DISTINCT bouwjaar FROM autos WHERE bouwjaar <> '' ORDER BY bouwjaar ASC");
+$bouwjaren = $bouwjaarStmt->fetchAll(PDO::FETCH_COLUMN);
+
+// filters gedeelte in laden merk distinct vooegt dubbele damen <> niet gelijk aan 
+$prijsStmt = $pdo->query("SELECT DISTINCT prijs FROM autos WHERE prijs <> '' ORDER BY prijs ASC");
+$prijzen = $prijsStmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Contact form verwerken
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
+
+  $naam = $_POST['naam'] ?? '';
+  $email = $_POST['email'] ?? '';
+  $telefoon = $_POST['telefoon'] ?? '';
+
+  $stmt = $pdo->prepare("
+    INSERT INTO contact (naam, email, telefoon)
+    VALUES (:naam, :email, :telefoon)
+  ");
+  
+  $stmt->execute([
+    ':naam' => $naam,
+    ':email' => $email,
+    ':telefoon' => $telefoon
+  ]);
 }
 
 ?>
@@ -34,6 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Van der Ven Autos</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="js/filter.js"></script>
+  <script src="js/hamburger.js" defer></script>
+
 </head>
 
 <body>
@@ -41,14 +78,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <header>
     <nav>
       <img src="img/logo.png" alt="ven_logo">
+
+      <button class="hamburger" id="navToggle" aria-controls="mainNav" aria-expanded="false">
+        <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+      </button>
+
       <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#carNewsContainer">Actueel auto nieuws</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="#interesse">Contact</a></li>
         <li><a href="cms/index.php">CMS</a></li>
-        <li><a href="occasionsPagina/index.php">Auto zoeken</a></li>
       </ul>
     </nav>
+    <div class="nav-overlay" id="navOverlay" hidden></div>
   </header>
 
   <!-- Main -->
@@ -71,8 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <p>3885 klanten beoordeelden Van der Ven</p>
           <p>Auto’s met gemiddeld een 9,3</p>
           <div class="heroButtons">
-            <button type="button">Auto zoeken</button>
-            <button type="button">Contact</button>
+            <button type="button" onclick="location.href='#interesse'">
+              Contact
+            </button>
           </div>
         </div>
 
@@ -82,47 +125,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="filterCategorie">
             <label for="brand">Merk:</label>
             <select id="brand" name="Merk">
-              <option value="tesla">Tesla</option>
-              <option value="volkswagen">Volkswagen</option>
-              <option value="audi">Audi</option>
+              <option value="">Alle merken</option>
+              <?php foreach ($merken as $merk): ?>
+                <option value="<?= htmlspecialchars($merk) ?>">
+                  <?= htmlspecialchars($merk) ?>
+                </option>
+              <?php endforeach; ?>
             </select>
 
             <label for="model">Model:</label>
             <select id="model" name="Model">
-              <option value="model3">Model 3</option>
-              <option value="golf">Golf</option>
-              <option value="a3">A3</option>
+              <option value="">Model:</option>
+              <?php foreach ($modelen as $model): ?>
+                <option value="<?= htmlspecialchars($model) ?>">
+                  <?= htmlspecialchars($model) ?>
+                </option>
+              <?php endforeach; ?>
             </select>
 
             <label for="carrosserie">Carrosserie:</label>
             <select id="carrosserie" name="Carrosserie">
-              <option value="sedan">Sedan</option>
-              <option value="suv">SUV</option>
-              <option value="hatchback">Hatchback</option>
+              <option value="">Carrosserie:</option>
+              <?php foreach ($carrosseries as $carrosserie): ?>
+                <option value="<?= htmlspecialchars(strtolower($carrosserie)) ?>">
+                  <?= htmlspecialchars($carrosserie) ?>
+                </option>
+              <?php endforeach; ?>
             </select>
 
             <label for="brandstof">Brandstof:</label>
             <select id="brandstof" name="Brandstof">
-              <option value="elektrisch">Elektrisch</option>
-              <option value="benzine">Benzine</option>
-              <option value="diesel">Diesel</option>
+              <option value="">Brandstofen:</option>
+              <?php foreach ($brandstofen as $brandstof): ?>
+                <option value="<?= htmlspecialchars(strtolower($brandstof)) ?>">
+                  <?= htmlspecialchars($brandstof) ?>
+                </option>
+              <?php endforeach; ?>
             </select>
 
             <label for="bouwjaar">Bouwjaar:</label>
             <select id="bouwjaar" name="Bouwjaar">
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
+              <option value="">Bouwjaren:</option>
+              <?php foreach ($bouwjaren as $bouwjaar): ?>
+                <option value="<?= (int) $bouwjaar ?>">
+                  <?= (int) $bouwjaar ?>
+                </option>
+              <?php endforeach; ?>
             </select>
 
             <label for="prijs">Prijs:</label>
             <select id="prijs" name="Prijs">
-              <option value="10000">Tot €10.000</option>
-              <option value="20000">Tot €20.000</option>
-              <option value="30000">Tot €30.000</option>
+              <option value="">Prijzen:</option>
+              <?php foreach ($prijzen as $prijs): ?>
+                <option value="<?= (int) $prijs ?>">
+                  <?= 'Tot €' . number_format((int) $prijs, 0, ',', '.') ?>
+                </option>
+              <?php endforeach; ?>
             </select>
 
-            <button type="button" class="filterBtn">Vinden (1000)</button>
+            <button href="#carCard" type="button" class="filterBtn">Vinden (1000)</button>
           </div>
         </section>
       </div>
@@ -136,9 +197,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
             // zorgt er voor dat je niet per se in de db img/ moet neerzetten 
             $img = trim((string) $n['poster_news']);
-            if ($img !== '' && strpos($img, 'img/') !== 0) {
-              $img = 'img/' . $img;
-            }
             ?>
             <article class="newsCard">
               <h3><?php echo htmlspecialchars($n['title']); ?></h3>
@@ -164,12 +222,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <?php
           // Zorg dat het pad klopt (DB kan 'img/...' of alleen 'bestandsnaam.png' bevatten)
           $img = trim($row['poster_auto']);
-          if ($img !== '' && strpos($img, 'img/') !== 0) {
-            $img = 'img/' . $img;
-          }
           ?>
           <!-- geeft structeur is een html5 ingeboude artiekel html 5 -->
-          <article class="carCard">
+          <article class="carCard" data-merk="<?= htmlspecialchars(strtolower($row['merk'])) ?>"
+            data-model="<?= htmlspecialchars(strtolower($row['model'])) ?>"
+            data-carrosserie="<?= htmlspecialchars(strtolower($row['carrosserie'])) ?>"
+            data-brandstof="<?= htmlspecialchars(strtolower($row['brandstof'])) ?>"
+            data-bouwjaar="<?= (int) $row['bouwjaar'] ?>" data-prijs="<?= (int) $row['prijs'] ?>">
             <div class="media">
               <img src="<?php echo htmlspecialchars($img ?: 'img/placeholder.png'); ?>"
                 alt="<?php echo htmlspecialchars($row['merk'] . ' ' . $row['model']); ?>">
@@ -209,15 +268,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <?php endif; ?>
     </section>
   </main>
+  <section id="interesse" class="interest">
+    <h3>Interesse?</h3>
+    <p>Laat je gegevens achter, we nemen contact met je op.</p>
+    <form class="interest-form" method="post">
+      <label>Naam
+        <input type="text" name="naam" placeholder="Voor- en achternaam">
+      </label>
 
-  <!-- Footer -->
-  <footer>
-    <form method="post" action="">
-      <label for="email">Je e-mail:</label>
-      <input type="email" id="email" name="email" placeholder="info@voorbeeld.nl">
-      <button type="submit">Subscribe</button>
+      <label>E-mail
+        <input type="email" name="email" placeholder="naam@voorbeeld.nl">
+      </label>
+
+      <label>Telefoon
+        <input type="tel" name="telefoon" placeholder="06 12345678">
+      </label>
+
+      <button type="submit" name="contact_submit">Verstuur</button>
     </form>
-  </footer>
+  </section>
 </body>
 
 </html>

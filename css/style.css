@@ -475,7 +475,38 @@ header nav ul li:last-child a:hover {
   background: #FFE7A2;
   border-color: #F3D26B;
 }
-
+.interest{
+  max-width:1200px;
+  margin:26px auto 0;
+  padding:0 20px 20px;
+}
+.interest h3{ margin:0 0 6px; }
+.interest-form{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:12px;
+  max-width:900px;
+}
+.interest-form label{
+  display:flex; flex-direction:column; gap:6px; font-weight:700; color:#475467;
+}
+.interest-form input{
+  border:1px solid var(--stroke);
+  border-radius:12px;
+  padding:12px 14px;
+  font:inherit;
+}
+.interest-form button{
+  grid-column: 1 / -1;
+  justify-self:start;
+  margin-top:2px;
+  background: var(--brand);
+  color:#fff;
+  font-weight:900;
+  padding:12px 18px;
+  border-radius:12px;
+}
+.interest-form button:hover{ background: var(--brand-700); }
 /* 
    Footer
     */
@@ -525,44 +556,210 @@ footer button:hover {
   background: var(--brand-700);
 }
 
-/* 
-   hier maak ik de website css voor de grote van een ipad op 1100px 
-    */
-@media (max-width: 1100px) {
-  #carProducts {
-    /* verandert van 3 kolommen naar 2  */
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* Knop zelf */
+.hamburger {
+  display: none; /* desktop: verborgen */
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
-/* Dit is voor de mobiel */
-@media (max-width: 900px) {
 
-  /* op mobiel stapelen we de twee kaarten onder elkaar */
-  .heroInner {
-    flex-direction: column;
-    gap: 20px;
+.hamburger-box {
+  position: relative;
+  width: 26px;
+  height: 18px;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff; /* witte streepjes op je brand header */
+  content: "";
+  transition: transform .25s ease, opacity .2s ease, background-color .2s ease;
+}
+
+.hamburger-inner { 
+  top: 50%; 
+  transform: translateY(-50%); 
+}
+.hamburger-inner::before { 
+  top: -8px; 
+}
+.hamburger-inner::after { 
+  top: 8px; 
+}
+
+/* Geopende (X) state */
+.hamburger[aria-expanded="true"] .hamburger-inner {
+  transform: translateY(-50%) rotate(45deg);
+}
+.hamburger[aria-expanded="true"] .hamburger-inner::before {
+  transform: translateY(8px) rotate(90deg);
+}
+.hamburger[aria-expanded="true"] .hamburger-inner::after {
+  transform: translateY(-8px) rotate(90deg);
+  opacity: 0;
+}
+
+/* Overlay achter het mobiele menu */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .35);
+  backdrop-filter: blur(1px);
+  z-index: 49; /* onder header (50) */
+}
+
+/* Scroll blokkeren als het menu open is */
+body.nav-open {
+  overflow: hidden;
+  touch-action: none;
+}
+/* ================= Hamburger menu (detailpagina) ================= */
+
+/* Knop zelf (desktop verborgen) */
+.hamburger{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:42px; height:42px;
+  border:0; background:transparent; cursor:pointer;
+}
+.hamburger-box{ position:relative; width:26px; height:18px; }
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after{
+  position:absolute; left:0; width:100%; height:2px; background:#fff; content:"";
+  transition:transform .25s ease, opacity .2s ease, background-color .2s ease;
+}
+.hamburger-inner{ top:50%; transform:translateY(-50%); }
+.hamburger-inner::before{ top:-8px; }
+.hamburger-inner::after{ top:8px; }
+
+/* Geopend (X) */
+.hamburger[aria-expanded="true"] .hamburger-inner{
+  transform:translateY(-50%) rotate(45deg);
+}
+.hamburger[aria-expanded="true"] .hamburger-inner::before{
+  transform:translateY(8px) rotate(90deg);
+}
+.hamburger[aria-expanded="true"] .hamburger-inner::after{
+  transform:translateY(-8px) rotate(90deg);
+  opacity:0;
+}
+
+/* Overlay achter het mobiele menu */
+.nav-overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(1px);
+  z-index:49; /* onder header (50) */
+}
+
+/* Scroll blokkeren als open */
+body.nav-open{ overflow:hidden; touch-action:none; }
+
+/* ====== Mobiel gedrag ====== */
+@media (max-width: 900px){
+  /* Hamburger tonen op mobiel, rechts in de rij */
+  .hamburger{ display:inline-flex; margin-left:auto; }
+
+  /* Side-drawer menu */
+  header nav ul{
+    position:fixed; top:0; right:0; bottom:0;
+    width:min(82vw, 340px);
+    background:var(--bg);
+    border-left:1px solid var(--stroke);
+    box-shadow:-12px 0 24px rgba(0,0,0,.08);
+    display:block;
+    padding:80px 20px 20px;
+    overflow-y:auto;
+
+    transform:translateX(100%);   /* start buiten beeld */
+    transition:transform .3s ease;
+    z-index:50;                   /* boven overlay */
   }
 
-  .hero {
-    padding: 48px 16px;
+  header nav ul li{ margin:0 0 14px; }
+  header nav ul a{
+    display:block; color:var(--ink);
+    padding:12px 10px; border-radius:12px; font-weight:800; text-decoration:none;
+  }
+  header nav ul a:hover{ background:#f5f5f7; }
+
+  /* Gele CTA full width in lade */
+  header nav ul li:last-child a{
+    display:block; width:100%; text-align:center; color:#2b2b2b;
   }
 
-  .heroContent,
+  /* Open-state (JS zet body.nav-open of nav.is-open) */
+  body.nav-open header nav ul,
+  header nav.is-open ul{
+    transform:translateX(0) !important;
+  }
+
+  /* Overlay zichtbaar als open */
+  body.nav-open .nav-overlay{ display:block !important; }
+}
+@media (max-width: 900px){
+
+  /* Algemene layout naar 1 kolom */
+  .heroInner,
+  .filterContainer,
+  .carCard,
+  .newsGrid,
+  #carProducts,
+  .newsCard {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* Auto cards volledige breedte */
+  .carCard {
+    margin-bottom: 20px;
+  }
+
+  /* Filter sectie onder de hero */
   .filterContainer {
+    margin-top: 20px;
+  }
+
+  /* Interest form stack */
+  .interest-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .interest-form input,
+  .interest-form button {
     width: 100%;
   }
+
+  /* Zorg dat de hero content ook stapelt */
+  .heroContent,
+  .heroButtons {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Zorg dat nieuws 1 kolom wordt */
+  .newsGrid {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
 }
-/* Dit is voor super kleine mobielen */
-@media (max-width: 640px) {
-  header nav {
-    gap: 14px;
-  }
 
-  header nav ul {
-    gap: 16px;
-  }
-
-  #carProducts {
-    grid-template-columns: 1fr;
-  }
+/* ====== Desktop fallback ====== */
+@media (min-width: 901px){
+  .nav-overlay{ display:none !important; }
 }

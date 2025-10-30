@@ -276,19 +276,188 @@ footer button{
 footer button:hover{ background: var(--brand-700); }
 
 /* Responsive  */
-@media (max-width: 1024px){
-  .detail-grid{
-    /* Komt uit gridd zorgt voor goede preset groote  */
-    grid-template-columns: 1fr;
+/* ================= Hamburger menu (detailpagina) ================= */
+
+/* Knop zelf (desktop verborgen) */
+.hamburger{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:42px; height:42px;
+  border:0; background:transparent; cursor:pointer;
+}
+.hamburger-box{ position:relative; width:26px; height:18px; }
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after{
+  position:absolute; left:0; width:100%; height:2px; background:#fff; content:"";
+  transition:transform .25s ease, opacity .2s ease, background-color .2s ease;
+}
+.hamburger-inner{ top:50%; transform:translateY(-50%); }
+.hamburger-inner::before{ top:-8px; }
+.hamburger-inner::after{ top:8px; }
+
+/* Geopend (X) */
+.hamburger[aria-expanded="true"] .hamburger-inner{
+  transform:translateY(-50%) rotate(45deg);
+}
+.hamburger[aria-expanded="true"] .hamburger-inner::before{
+  transform:translateY(8px) rotate(90deg);
+}
+.hamburger[aria-expanded="true"] .hamburger-inner::after{
+  transform:translateY(-8px) rotate(90deg);
+  opacity:0;
+}
+
+/* Overlay achter het mobiele menu */
+.nav-overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(1px);
+  z-index:49; /* onder header (50) */
+}
+
+/* Scroll blokkeren als open */
+body.nav-open{ overflow:hidden; touch-action:none; }
+
+/* ====== Mobiel gedrag ====== */
+/* ======= MOBILE RESPONSIVE MODE (≤900px) ======= */
+
+@media (max-width: 900px){
+
+  /* --- HEADER / NAV --- */
+  .hamburger{ display:inline-flex; margin-left:auto; }
+
+  header nav{
+    padding:12px 16px;
+    gap:14px;
   }
+
+  header nav ul{
+    position:fixed; top:0; right:0; bottom:0;
+    width:min(82vw, 340px);
+    background:var(--bg);
+    border-left:1px solid var(--stroke);
+    box-shadow:-12px 0 24px rgba(0,0,0,.08);
+    display:block;
+    padding:80px 20px 20px;
+    overflow-y:auto;
+    transform:translateX(100%);
+    transition:transform .3s ease;
+    z-index:50;
+  }
+
+  header nav ul li{ margin:0 0 14px; }
+
+  header nav ul a{
+    display:block; color:var(--ink);
+    padding:12px 10px;
+    border-radius:12px;
+    font-weight:800;
+    text-decoration:none;
+  }
+
+  header nav ul a:hover{ background:#f5f5f7; }
+
+  header nav ul li:last-child a{
+    display:block; width:100%; text-align:center; color:#2b2b2b;
+  }
+
+  body.nav-open header nav ul,
+  header nav.is-open ul{
+    transform:translateX(0) !important;
+  }
+
+  body.nav-open .nav-overlay{ display:block !important; }
+
+
+  /*  DETAIL GRID: 2 kolommen naar 1 kolom  */
+  .detail-grid{
+    grid-template-columns:1fr;
+    gap:16px;
+    margin-top:20px;
+  }
+
   #car_sales_info.sales{
     position:static;
+    top:auto;
+    width:100%;
+    padding:20px;
   }
+
+
+  /*  POSTER FRAME FULL WIDTH */
+  .poster-frame{ border-radius: var(--radius-lg); }
+  .poster-main{
+    width:100%;
+    height:auto;
+    aspect-ratio:16/9;
+  }
+
+
+  /*  TABBAR WRAPS  */
+  .tabbar{
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+
+  /*  SPECS TABLE STACK  */
+  .spec-table{
+    border-spacing:0;
+  }
+
+  .spec-table tr{
+    display:block;
+    margin:10px 0;
+  }
+
+  .spec-table th,
+  .spec-table td{
+    display:block;
+    width:100%;
+    border:1px solid var(--stroke);
+    border-radius:12px;
+    padding:10px 14px;
+  }
+
+  .spec-table th{
+    margin-bottom:6px;
+    border-bottom-left-radius:12px;
+    border-top-right-radius:12px;
+  }
+
+
+  /*  INTERESSE FORM 3 kolommen → 1 kolom  */
   .interest-form{
-    grid-template-columns: 1fr;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    max-width:100%;
   }
-}
-@media (max-width: 640px){
-  header nav{ gap:14px; }
-  header nav ul{ gap:16px; }
+
+  .interest-form input,
+  .interest-form button{
+    width:100%;
+  }
+
+  .interest-form button{
+    margin-top:6px;
+    border-radius:12px;
+  }
+
+
+  /* GLOBAL STACK FOR SAFETY (GRIDS) */
+  .detail-grid,
+  .newsGrid,
+  #carProducts,
+  .carCard,
+  .interest{
+    width:100% !important;
+    display:block;
+  }
+
+  .carCard{
+    margin-bottom:18px;
+  }
 }

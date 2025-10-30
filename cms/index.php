@@ -4,7 +4,7 @@ require_once '../loginPagina/auth.php';
 
 
 //  verplicht ingelogd
-requireLogin('../loginPagina/index.php'); 
+requireLogin('../loginPagina/index.php');
 
 $user = $_SESSION['user']; // als je de naam/rol wilt tonen
 
@@ -19,7 +19,7 @@ $titel = trim(($auto['merk'] ?? '') . ' ' . ($auto['model'] ?? ''));
 <head>
   <meta charset="UTF-8">
   <title>CMS Dashboard Autos</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=<?= filemtime('css/style.css') ?>">
 </head>
 
 <body>
@@ -27,7 +27,7 @@ $titel = trim(($auto['merk'] ?? '') . ' ' . ($auto['model'] ?? ''));
   <!--  PRODUCTBEHEER -->
   <header class="cms-header">
     <h1>Productbeheer</h1>
-    <a href="add.php" class="btn primary">+ Nieuw product</a>
+    <a href="product_add.php" class="btn primary">+ Nieuw product</a>
   </header>
 
   <main class="product-table-wrapper">
@@ -71,19 +71,19 @@ $titel = trim(($auto['merk'] ?? '') . ' ' . ($auto['model'] ?? ''));
             <td><?= htmlspecialchars($product['model']) ?></td>
             <td><?= htmlspecialchars($product['carrosserie']) ?></td>
             <!-- zorgt voor alleen cijfers ipv , de int  -->
-            <td><?= (int)($product['bouwjaar']) ?></td>
-            <td><?= (int)($product['km_stand']) ?></td>
+            <td><?= (int) ($product['bouwjaar']) ?></td>
+            <td><?= (int) ($product['km_stand']) ?></td>
             <td><?= htmlspecialchars($product['brandstof']) ?></td>
             <td><?= htmlspecialchars($product['versnellingsbak']) ?></td>
             <td><?= htmlspecialchars($product['vermogen']) ?></td>
             <td><?= htmlspecialchars($product['kenteken']) ?></td>
             <td><?= htmlspecialchars($product['fabrieks_kleur']) ?></td>
-            <td>€<?=number_format($product['prijs'], 2) ?></td>
-            <td>€<?=number_format($product['prijs_financieren'], 2) ?></td>
+            <td>€<?= number_format($product['prijs'], 2) ?></td>
+            <td>€<?= number_format($product['prijs_financieren'], 2) ?></td>
 
             <td>
-              <a href="edit.php?id=<?= $product['productID'] ?>" class="btn small">Bewerken</a>
-              <a href="delete.php?id=<?= $product['productID'] ?>" class="btn small red"
+              <a href="product_edit.php?id=<?= $product['auto_id'] ?>" class="btn small">Bewerken</a>
+              <a href="delete.php?id=<?= $product['auto_id'] ?>" class="btn small red"
                 onclick="return confirm('Weet je zeker dat je dit product wilt verwijderen?')">Verwijderen</a>
             </td>
           </tr>
@@ -112,12 +112,12 @@ $titel = trim(($auto['merk'] ?? '') . ' ' . ($auto['model'] ?? ''));
         <?php
         // Variable voor het inladen van de gegevens 
         $stmt_news = $pdo->query("SELECT * FROM nieuws ORDER BY nieuws_id DESC");
-        $stmt_news ->execute();
+        $stmt_news->execute();
         while ($news = $stmt_news->fetch()): ?>
           <tr>
             <td>
               <?php if (!empty($news['poster_news'])): ?>
-                <img src="../img/<?= $news['poster_news'] ?>" class="thumb">
+                <img src="../<?= $news['poster_news'] ?>" class="thumb">
               <?php else: ?>
                 <span class="thumb placeholder">Geen Afbeelding</span>
               <?php endif; ?>
@@ -125,9 +125,14 @@ $titel = trim(($auto['merk'] ?? '') . ' ' . ($auto['model'] ?? ''));
             <td><?= htmlspecialchars($news['title']) ?></td>
             <td><?= htmlspecialchars(mb_strimwidth($news['content'], 0, 100, '...')) ?></td>
             <td>
-              <a href="news_edit.php?id=<?= $news['id'] ?>" class="btn small">Bewerken</a>
-              <a href="news_delete.php?id=<?= $news['id'] ?>" class="btn small red"
-                onclick="return confirm('Weet je zeker dat je deze news wilt verwijderen?')">Verwijderen</a>
+              <a href="news_edit.php?id=<?= $news['nieuws_id'] ?>" class="btn small">Bewerken</a>
+              <form class="nocss" action="actions.php" method="post"
+                onsubmit="return confirm('Weet je zeker dat je deze auto wilt verwijderen?');" style="display:inline;">
+                <input type="hidden" name="type" value="news">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" value="<?= (int) $news['nieuws_id'] ?>">
+                <button type="submit" class="btn small red">Verwijderen</button>
+              </form>
             </td>
           </tr>
         <?php endwhile; ?>

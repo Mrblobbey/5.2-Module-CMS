@@ -12,16 +12,6 @@ if (isset($_GET['id']) && ctype_digit($_GET['id'])) {
   die("Ongeldige ID!");
 }
 
-function imgPath($v, $prefix = '../img/')
-{
-  $v = trim((string) $v);
-  if ($v === '')
-    return $prefix . 'placeholder.png';
-  if (str_starts_with($v, 'http') || str_starts_with($v, 'img/') || str_starts_with($v, '../img/'))
-    return $v;
-  return $prefix . $v;
-}
-
 
 function h($v)
 {
@@ -52,19 +42,28 @@ function km($v)
 }
 
 
-$poster = imgPath($auto['poster_auto'] ?? '');
+$poster = $auto['poster_auto'];
 // om de titel goed neet te zetten 
 $titel = trim(($auto['merk'] ?? '') . ' ' . ($auto['model'] ?? ''));
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // neemt het email uit de form zonder validatie 
+// Contact form verwerken
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
+
+  $naam = $_POST['naam'] ?? '';
   $email = $_POST['email'] ?? '';
+  $telefoon = $_POST['telefoon'] ?? '';
 
-  // sla op in de database 
-  $newsbrief = $pdo->prepare("INSERT INTO nieuwsbrief (email) VALUES (:email)");
-  $newsbrief->execute([':email' => $email]);
+  $stmt = $pdo->prepare("
+    INSERT INTO contact (naam, email, telefoon)
+    VALUES (:naam, :email, :telefoon)
+  ");
+
+  $stmt->execute([
+    ':naam' => $naam,
+    ':email' => $email,
+    ':telefoon' => $telefoon
+  ]);
 }
-
 ?>
 
 
@@ -77,6 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Van der Ven Autos</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="../js/hamburger.js" defer></script>
+
 </head>
 
 <body>
@@ -84,14 +85,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <header>
     <nav>
       <img src="../img/logo.png" alt="ven_logo">
+
+      <button class="hamburger" id="navToggle" aria-controls="mainNav" aria-expanded="false">
+        <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+      </button>
+
       <ul>
         <li><a href="../index.php">Home</a></li>
         <li><a href="../index.php#carNewsContainer">Actueel auto nieuws</a></li>
-        <li><a href="../contactPagina/index.php">Contact</a></li>
+        <li><a href="../index.php#interesse">Contact</a></li>
         <li><a href="../cms/index.php">CMS</a></li>
-        <li><a href="#">Auto zoeken</a></li>
       </ul>
     </nav>
+
+    <div class="nav-overlay" id="navOverlay" hidden></div>
+
+
   </header>
 
   <!-- Main -->
@@ -177,23 +186,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section id="interesse" class="interest">
       <h3>Interesse?</h3>
       <p>Laat je gegevens achter, we nemen contact met je op.</p>
-      <form class="interest-form">
-        <label>Naam <input type="text" placeholder="Voor- en achternaam"></label>
-        <label>E-mail <input type="email" placeholder="naam@voorbeeld.nl"></label>
-        <label>Telefoon <input type="tel" placeholder="06 12345678"></label>
-        <button type="submit">Verstuur</button>
+      <form class="interest-form" method="post">
+        <label>Naam
+          <input type="text" name="naam" placeholder="Voor- en achternaam">
+        </label>
+
+        <label>E-mail
+          <input type="email" name="email" placeholder="naam@voorbeeld.nl">
+        </label>
+
+        <label>Telefoon
+          <input type="tel" name="telefoon" placeholder="06 12345678">
+        </label>
+
+        <button type="submit" name="contact_submit">Verstuur</button>
       </form>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer>
-    <form method="post" action="">
-      <label for="email">Je e-mail:</label>
-      <input type="email" id="email" name="email" placeholder="info@voorbeeld.nl">
-      <button type="submit">Subscribe</button>
-    </form>
-  </footer>
 </body>
 
 </html>
